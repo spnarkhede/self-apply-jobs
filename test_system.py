@@ -5,14 +5,10 @@ import sys
 import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
-from config.settings import load_config
-from job_aggregator.aggregator import JobAggregator
-from skills_analysis.analyzer import SkillsAnalyzer
-from application_bot.bot import ApplicationBot
-
 def test_config_loading():
     """Test that configuration loads correctly."""
     try:
+        from config.settings import load_config
         config = load_config()
         assert isinstance(config, dict)
         print("✓ Configuration loading test passed")
@@ -24,6 +20,8 @@ def test_config_loading():
 def test_job_aggregator():
     """Test the job aggregator module."""
     try:
+        from config.settings import load_config
+        from job_aggregator.aggregator import JobAggregator
         config = load_config()
         aggregator = JobAggregator(config)
         jobs = aggregator.search_jobs("Software Engineer", "Remote", "50")
@@ -36,6 +34,8 @@ def test_job_aggregator():
 def test_skills_analyzer():
     """Test the skills analyzer module."""
     try:
+        from config.settings import load_config
+        from skills_analysis.analyzer import SkillsAnalyzer
         config = load_config()
         analyzer = SkillsAnalyzer(config)
         # Using dummy data for testing
@@ -50,6 +50,8 @@ def test_skills_analyzer():
 def test_application_bot():
     """Test the application bot module."""
     try:
+        from config.settings import load_config
+        from application_bot.bot import ApplicationBot
         config = load_config()
         bot = ApplicationBot(config)
         # We won't actually submit an application in the test

@@ -7,6 +7,8 @@ playwright>=1.25.0
 # Data Processing and Analysis
 pandas>=1.5.0
 numpy>=1.24.0
+# Using pre-built wheels for spaCy to avoid compilation issues
+https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.4.1/en_core_web_sm-3.4.1-py3-none-any.whl
 spacy>=3.4.0
 scikit-learn>=1.2.0
 

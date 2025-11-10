@@ -1,5 +1,25 @@
 |-- .env.example
 |-- CONTRIBUTING.md
+|-- frontend
+    |-- package.json
+    |-- postcss.config.js
+    |-- public
+        |-- index.html
+    |-- README.md
+    |-- setup.bat
+    |-- setup.sh
+    |-- src
+        |-- App.js
+        |-- assets
+        |-- components
+            |-- Dashboard.js
+            |-- ProjectSpec.js
+            |-- TechnicalSpec.js
+        |-- index.css
+        |-- index.js
+        |-- styles
+        |-- utils
+    |-- tailwind.config.js
 |-- LICENSE
 |-- README.md
 |-- requirements.txt

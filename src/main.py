@@ -3,20 +3,37 @@ Main entry point for the automated job search and application system.
 """
 import os
 import sys
-from config.settings import load_config
-from job_aggregator.aggregator import JobAggregator
-from skills_analysis.analyzer import SkillsAnalyzer
-from application_bot.bot import ApplicationBot
-from dashboard.app import run_dashboard
 
 def main():
     # Load configuration
-    config = load_config()
+    try:
+        from config.settings import load_config
+        config = load_config()
+    except Exception as e:
+        print(f"Error loading configuration: {e}")
+        return
     
-    # Initialize modules
-    job_aggregator = JobAggregator(config)
-    skills_analyzer = SkillsAnalyzer(config)
-    application_bot = ApplicationBot(config)
+    # Initialize modules with error handling
+    try:
+        from job_aggregator.aggregator import JobAggregator
+        job_aggregator = JobAggregator(config)
+    except Exception as e:
+        print(f"Error initializing job aggregator: {e}")
+        job_aggregator = None
+    
+    try:
+        from skills_analysis.analyzer import SkillsAnalyzer
+        skills_analyzer = SkillsAnalyzer(config)
+    except Exception as e:
+        print(f"Error initializing skills analyzer: {e}")
+        skills_analyzer = None
+    
+    try:
+        from application_bot.bot import ApplicationBot
+        application_bot = ApplicationBot(config)
+    except Exception as e:
+        print(f"Error initializing application bot: {e}")
+        application_bot = None
     
     # Display menu
     while True:
@@ -30,6 +47,10 @@ def main():
         choice = input("Enter your choice: ")
         
         if choice == "1":
+            if job_aggregator is None:
+                print("Job aggregator module not available.")
+                continue
+                
             # Job search functionality
             title = input("Job title: ")
             location = input("Location: ")
@@ -39,6 +60,10 @@ def main():
             print(f"Found {len(jobs)} jobs")
             
         elif choice == "2":
+            if skills_analyzer is None:
+                print("Skills analyzer module not available.")
+                continue
+                
             # Skills analysis functionality
             resume_path = input("Path to resume: ")
             job_description = input("Job description (or leave blank): ")
@@ -48,6 +73,10 @@ def main():
             print(analysis)
             
         elif choice == "3":
+            if application_bot is None:
+                print("Application bot module not available.")
+                continue
+                
             # Application bot functionality
             job_url = input("Job URL: ")
             resume_path = input("Path to resume: ")
@@ -58,7 +87,12 @@ def main():
             
         elif choice == "4":
             # Run dashboard
-            run_dashboard(config)
+            try:
+                from dashboard.app import run_dashboard
+                run_dashboard(config)
+            except Exception as e:
+                print(f"Error running dashboard: {e}")
+                print("Dashboard module not available.")
             
         elif choice == "5":
             print("Exiting...")

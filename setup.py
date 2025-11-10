@@ -4,6 +4,7 @@ Setup script for the automated job search system.
 import os
 import subprocess
 import sys
+import platform
 
 def setup_project():
     """
@@ -26,15 +27,49 @@ def setup_project():
     
     # Install dependencies
     print("Installing dependencies...")
-    pip_path = os.path.join(venv_path, 'Scripts', 'pip.exe') if os.name == 'nt' else os.path.join(venv_path, 'bin', 'pip')
     
+    # Determine the correct pip path based on OS
+    if platform.system() == "Windows":
+        pip_path = os.path.join(venv_path, 'Scripts', 'pip.exe')
+    else:
+        pip_path = os.path.join(venv_path, 'bin', 'pip')
+    
+    # Try installing with pre-compiled wheels first
     try:
-        subprocess.run([pip_path, 'install', '-r', 'requirements.txt'])
-        print("Dependencies installed successfully!")
+        subprocess.run([pip_path, 'install', '--only-binary=all', '-r', 'requirements.txt'])
+        print("Dependencies installed successfully with pre-compiled wheels!")
     except Exception as e:
-        print(f"Error installing dependencies: {e}")
-        print("Please make sure you have Python and pip installed.")
-        return False
+        print(f"Error installing with pre-compiled wheels: {e}")
+        print("Trying alternative installation method...")
+        
+        # Alternative approach - install packages individually
+        essential_packages = [
+            'selenium',
+            'beautifulsoup4',
+            'requests',
+            'pandas',
+            'numpy',
+            'scikit-learn',
+            'python-docx',
+            'PyPDF2',
+            'pdfplumber',
+            'nltk',
+            'openai',
+            'flask',
+            'flask-sqlalchemy',
+            'psycopg2',
+            'sqlalchemy',
+            'python-dotenv',
+            'schedule'
+        ]
+        
+        for package in essential_packages:
+            try:
+                subprocess.run([pip_path, 'install', '--only-binary=all', package])
+                print(f"Installed {package} successfully")
+            except Exception as e:
+                print(f"Failed to install {package}: {e}")
+                print("Continuing with other packages...")
     
     # Create .env file from example if it doesn't exist
     if not os.path.exists('.env'):
@@ -51,11 +86,25 @@ def setup_project():
     print("\nNext steps:")
     print("1. Update the .env file with your actual credentials")
     print("2. Activate the virtual environment:")
-    print("   Windows: venv\\Scripts\\activate")
-    print("   macOS/Linux: source venv/bin/activate")
+    if platform.system() == "Windows":
+        print("   Windows: venv\\Scripts\\activate")
+    else:
+        print("   macOS/Linux: source venv/bin/activate")
     print("3. Run the application: python src/main.py")
     
     return True
 
+def install_build_tools():
+    """
+    Provide guidance for installing build tools on Windows.
+    """
+    if platform.system() == "Windows":
+        print("\nIf you encounter build errors, you may need to install Microsoft C++ Build Tools:")
+        print("1. Download Microsoft C++ Build Tools from:")
+        print("   https://visualstudio.microsoft.com/visual-cpp-build-tools/")
+        print("2. Install with C++ build tools workload")
+        print("3. Restart your command prompt and try again")
+
 if __name__ == "__main__":
     setup_project()
+    install_build_tools()
