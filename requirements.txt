@@ -1,0 +1,32 @@
+# Web Scraping and Automation
+selenium>=4.0.0
+beautifulsoup4>=4.10.0
+requests>=2.28.0
+playwright>=1.25.0
+
+# Data Processing and Analysis
+pandas>=1.5.0
+numpy>=1.24.0
+spacy>=3.4.0
+scikit-learn>=1.2.0
+
+# PDF and Document Processing
+python-docx>=0.8.11
+PyPDF2>=3.0.0
+pdfplumber>=0.7.6
+
+# Natural Language Processing
+nltk>=3.7
+openai>=0.27.0
+
+# Web Framework
+flask>=2.2.0
+flask-sqlalchemy>=3.0.0
+
+# Database
+psycopg2>=2.9.0
+sqlalchemy>=2.0.0
+
+# Utilities
+python-dotenv>=0.21.0
+schedule>=1.2.0

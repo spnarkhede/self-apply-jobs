@@ -1,0 +1,30 @@
+|-- .env.example
+|-- CONTRIBUTING.md
+|-- LICENSE
+|-- README.md
+|-- requirements.txt
+|-- ROADMAP.md
+|-- run.bat
+|-- run.sh
+|-- setup.py
+|-- src
+    |-- application_bot
+        |-- bot.py
+        |-- __init__.py
+    |-- config
+        |-- settings.py
+        |-- __init__.py
+    |-- dashboard
+        |-- app.py
+        |-- __init__.py
+    |-- job_aggregator
+        |-- aggregator.py
+        |-- __init__.py
+    |-- main.py
+    |-- skills_analysis
+        |-- analyzer.py
+        |-- __init__.py
+    |-- utils
+        |-- helpers.py
+        |-- __init__.py
+|-- test_system.py
